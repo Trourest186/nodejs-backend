@@ -7,7 +7,7 @@ phases:
       - aws --version
       # - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 115228050885.dkr.ecr.us-east-1.amazonaws.com
-      - REPOSITORY_URI=916495840179.dkr.ecr.ap-southeast-1.amazonaws.com/test-sotaicg-platform-base
+      - REPOSITORY_URI=115228050885.dkr.ecr.us-east-1.amazonaws.com/test-sotaicg-platform-base
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
