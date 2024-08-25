@@ -59,5 +59,5 @@ app.post('/api/send-data', express.json(), (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://${ip}:${port}`);
+  console.log(`!!! Server running at http://${ip}:${port}`);
 });
