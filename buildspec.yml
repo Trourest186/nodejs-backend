@@ -1,8 +1,4 @@
 version: 0.2
-  env:
-    shell: bash
-    parameter-store:
-      GITHUB_TOKEN: "GITHUB_TOKEN"
 phases:
   pre_build:
     commands:
