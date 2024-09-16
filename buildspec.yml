@@ -1,5 +1,8 @@
 version: 0.2
-
+  env:
+    shell: bash
+    parameter-store:
+      GITHUB_TOKEN: "GITHUB_TOKEN"
 phases:
   pre_build:
     commands:
@@ -15,16 +18,17 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $REPOSITORY_URI:backend1 $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $REPOSITORY_URI:backend2 $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:backend1
+      - docker push $REPOSITORY_URI:backend2
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"test-sotaicg-platform-backend_dataplatform","imageUri":"%s"}]'
-        $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json
-artifacts:
-  files: imagedefinitions.json
+      - printf '[{"name":"test-sotaicg-platform-ecs-backend-1","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > test-sotaicg-platform-ecs-backedn1.json
+      - printf '[{"name":"test-sotaicg-platform-ecs-backend-2","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > test-sotaicg-platform-ecs-backedn2.json
+  artifacts:
+    files: 'test-sotaicg-platform-ecs-*.json'
