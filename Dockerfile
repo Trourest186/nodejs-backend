@@ -16,5 +16,4 @@ COPY . .
 # Expose port mà ứng dụng sẽ chạy
 EXPOSE 3000
 
-# Chạy ứng dụng khi container khởi động
-CMD [ "node", "server.js" ]
+
