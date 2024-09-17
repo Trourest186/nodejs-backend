@@ -1,5 +1,5 @@
 # Chọn hình ảnh Node.js chính thức từ Docker Hub
-FROM node:18
+FROM 115228050885.dkr.ecr.us-east-1.amazonaws.com/test-sotaicg-platform-base:core
 
 # Tạo và đặt thư mục làm việc trong container
 WORKDIR /usr/src/app
