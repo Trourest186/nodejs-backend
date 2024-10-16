@@ -8,13 +8,7 @@ dotenv.config();  // Load environment variables from .env file (if present)
 const app = express();
 const port = process.env.PORT || 3000;
 const ip = process.env.IP || "0.0.0.0";
-
-
-// Middleware to set environment variable from secret
-app.use(async (req, res, next) => {
-  process.env.MESSAGE = secret.MESSAGE || 'Hello from backend!';
-  next();
-});
+const message = process.env.MESSAGE || "Hello"
 
 // Use cors middleware to enable CORS for all origins
 app.use(cors()); // Allows all origins by default
