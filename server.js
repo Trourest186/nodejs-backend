@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const AWS = require('aws-sdk');
 const dotenv = require('dotenv');
 const cors = require('cors'); // Import cors
 
@@ -8,29 +7,11 @@ dotenv.config();  // Load environment variables from .env file (if present)
 
 const app = express();
 const port = process.env.PORT || 3000;
-const ip = process.env.IP;
-const secretArn = 'arn:aws:secretsmanager:us-east-1:115228050885:secret:test/tule2_ghaction-ZiZXNi';  // ARN of the secret from Secrets Manager
+const ip = process.env.IP || "0.0.0.0";
 
-// Configure AWS SDK
-AWS.config.update({ region: 'us-east-1' });
-const secretsManager = new AWS.SecretsManager();
-
-async function getSecret() {
-  try {
-    const data = await secretsManager.getSecretValue({ SecretId: secretArn }).promise();
-    if (data.SecretString) {
-      const secret = JSON.parse(data.SecretString);
-      return secret;
-    }
-  } catch (err) {
-    console.error('Error retrieving secret:', err);
-    return {};
-  }
-}
 
 // Middleware to set environment variable from secret
 app.use(async (req, res, next) => {
-  const secret = await getSecret();
   process.env.MESSAGE = secret.MESSAGE || 'Hello from backend!';
   next();
 });
@@ -59,5 +40,5 @@ app.post('/api/send-data', express.json(), (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`!!! Server running Trourest =.= at http://${ip}:${port}`);
+  console.log(`!!! Server running Trourest =.= at http://0.0.0.0:${port}`);
 });
