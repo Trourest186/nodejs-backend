@@ -57,6 +57,9 @@ jobs:
         task-definition: ${{ env.ECS_TASK_DEFINITION }}
         container-name: ${{ env.CONTAINER_NAME }}
         image: ${{ steps.build-image.outputs.image }}
+        task-definition-arn: "arn:aws:ecs:us-east-1:115228050885:task-definition/test-sotaicg-platform-ecs-crawler"
+        task-definition-revision: 1
+        task-definition-famaily: "test-sotaicg-platform-ecs-crawler"
         
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v2
