@@ -7,6 +7,10 @@ on:
 
 
 # build docker image , # push docker image to ecr 
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read
+  
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: test-sotaicg-platform-base
