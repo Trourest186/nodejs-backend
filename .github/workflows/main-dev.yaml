@@ -46,7 +46,8 @@ jobs:
         REPOSITORY: test-sotaicg-platform-base
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        aws secretsmanager get-secret-value --secret-id test/tule2_ghaction --region us-east-1 | jq -r '.SecretString' | jq -r "to_entries|map(\"\(.key)=\\\"\(.value|tostring)\\\"\")|.[]" > .env
+        docker build -f Dockerfile -t $REGISTRY/$REPOSITORY:$IMAGE_TAG $(for i in $(grep -vE '^#|^$' .env); do out+="--build-arg $i " ; done; echo $out;out="") .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
         echo "image=$REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
